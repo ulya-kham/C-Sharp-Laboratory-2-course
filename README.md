@@ -10,10 +10,15 @@ List.
 Составить программу, которая удаляет из списка L все элементы E, если такие есть.
 
 ### Алгоритм решения
-1. 
+1. В статическом классе Collections созданы методы заполнения List: FillListIntManual и FillListStringManual для ручного ввода чисел и строк, FillListIntAuto и FillListStringAuto для автоматического заполнения. Числа генерируются через Random в диапазоне [min; max], а слова выбираются случайно из готового массива
+2. Метод RemoveAllEntries<T> удаляет из списка все вхождения элемента E и возвращает количество удаленных элементов. Перебор идет с конца списка (i = list.Count - 1), чтобы при удалении через RemoveAt(i) не пропускались элементы. Для сравнения используется EqualityComparer<T>.Default.Equals, т.е. метод работает с разными типами данных. Метод PrintList<T> выводит список в квадратных скобках через запятую, если список пустой, выводится сообщение
+3. В SolveTask1 пользователь выбирает тип элементов (числа или слова), способ заполнения и количество элементов (ReadPositiveInt). Для случайных чисел дополнительно вводит границы диапазона, если min > max, ввод повторяется в цикле while. Затем выводится исходный список, пользователь вводит E, вызывается RemoveAllEntries. Если элемент не найден, выводится сообщение, иначе количество удаленных элементов и список после удаления
 
 ### Тестирование
-
+<img width="527" height="735" alt="image" src="https://github.com/user-attachments/assets/aef8cddf-6b9b-4d82-93c6-5f1fcd17259d" />
+<img width="482" height="635" alt="image" src="https://github.com/user-attachments/assets/f783097c-2c56-409a-b8fd-a20faafa03bb" />
+<img width="489" height="671" alt="image" src="https://github.com/user-attachments/assets/5b1425f5-cff3-40fa-b856-46b71c2bce3e" />
+<img width="921" height="561" alt="image" src="https://github.com/user-attachments/assets/83148350-524c-4b89-b0c1-b0f5a725ba67" />
 
 
 
@@ -27,10 +32,15 @@ LinkedList.
 Напечатать в обратном порядке элементы непустого списка L. 
 
 ### Алгоритм решения
-1.
+1. В классе Collections созданы методы заполнения LinkedList: FillLinkedListIntManual, FillLinkedListStringManual для ручного ввода и FillLinkedListIntAuto, FillLinkedListStringAuto для автоматического. Элементы добавляются в конец через AddLast. Для чисел используются случайные значения в диапазоне [min; max], для строк случайные слова из готового массива
+2. Метод PrintLinkedList<T> выводит список в обычном порядке: начинает с list.First и переходит к следующему узлу через node.Next. Метод PrintLinkedListReversed<T> начинает с list.Last и идет к предыдущему узлу через node.Previous, пока node не станет null. При этом исходный список не изменяется
+3. В SolveTask2 пользователь выбирает числа или слова, ручное или автоматическое заполнение, вводит количество элементов (ReadPositieInt). Для случайных чисел дополнительно вводит границы диапазона с проверкой min <= max. После создания проверяется list.Count == 0, затем выводится исходный список и элементы в обратном порядке
 
 ### Тестирование
-
+<img width="729" height="686" alt="image" src="https://github.com/user-attachments/assets/9f4f5e27-42d6-449e-9645-031838b9eeee" />
+<img width="654" height="531" alt="image" src="https://github.com/user-attachments/assets/370dc646-e85e-4db1-82d1-30441e835d2a" />
+<img width="440" height="572" alt="image" src="https://github.com/user-attachments/assets/5f6db4cc-aa18-49f5-89b5-9985fb7cbc78" />
+<img width="871" height="546" alt="image" src="https://github.com/user-attachments/assets/62e9be44-cf93-49e4-8ac1-d168af593ba3" />
 
 
 
@@ -44,11 +54,13 @@ HashSet.
 В городе имеется n общеобразовательных учебных заведений, которые могут закупать компьютерную технику и оргтехнику. Есть перечень компьютерных фирм, где может производиться закупка. Ответить на следующие вопросы: 1) в каких фирмах закупка производилась каждым из заведений? 2) в каких фирмах закупка производилась хотя бы одним из заведений? 3) в каких фирмах ни одно из заведений не закупало компьютеры?
 
 ### Алгоритм решения
-1.
+1. В классе Collections создан обобщенный метод SolveFirmsTask<T>, который получает общий перечень фирм allItems и массив множеств sets, где каждый HashSet содержит фирмы отдельного учебного заведения
+2. Для первого вопроса создается common как копия sets[0], затем через IntersectWith находится пересечение с множествами остальных заведений, т.е. остаются фирмы, у которых закупали все. Для второго создается пустое множество any, в которое через UnionWith добавляются фирмы всех заведений. Для третьего создается копия общего перечня none, из которой через ExceptWith удаляются все фирмы из any. Результаты выводятся через PrintHashSet<T>, если множество пустое, выводится сообщение
+3. В SolveTask3 пользователь вводит количество фирм (ReadPositiveInt) и их названия. Фирмы сохраняются в HashSet<string> allFirms, повторения проверяются через Contains. Затем вводится количество учебных заведений и для каждого количество фирм от 0 до firmsCount. Для каждого заведения создается отдельный HashSet<string>, при вводе проверяется, что фирма есть в общем перечне и еще не указана для этого заведения. После заполнения вызывается SolveFirmsTask
 
 ### Тестирование
-
-
+<img width="436" height="960" alt="image" src="https://github.com/user-attachments/assets/447e013e-f7e0-4c6d-a510-527dc7d78658" />
+<img width="423" height="683" alt="image" src="https://github.com/user-attachments/assets/2db1b24d-459c-481c-aed3-89a7355ecb3c" />
 
 
 
@@ -62,10 +74,15 @@ HashSet.
 Файл содержит текст на русском языке. Напечатать в алфавитном порядке все звонкие согласные буквы, которые входят хотя бы в одно слово.
 
 ### Алгоритм решения
-1. 
+1. В классе Collections созданы методы заполнения файла task4.txt: FillTextFileManual записывает строки с клавиатуры, FillTextFileAuto составляет их из случайных слов готового массива (от 3 до 6 слов в строке). Запись идет через StreamWriter внутри using, чтобы файл автоматически закрывался. Оба метода возвращают bool: true при успешном создании файла и false при ошибке (try-catch). Метод PrintTextFile читает файл построчно через StreamReader
+2. Метод CreateVoicedSet создает HashSet<char> со звонкими согласными "бвгджзйлмнр". Метод CollectLettersFromFile читает строки файла, перебирает символы, переводит их в нижний регистр через char.ToLower и добавляет буквы в HashSet, если char.IsLetter возвращает true. Повторения не сохраняются
+3. Метод IntersectSets<T> создает копию первого множества и через IntersectWith оставляет только общие элементы. В SolveVoicedConsonants пересекаются звонкие согласные и буквы из файла. Метод PrintSetSorted<T> переносит результат в List, сортирует через Sort и выводит по алфавиту
+4. В SolveTask4 пользователь выбирает способ заполнения и количество строк (ReadPositiveInt). Если файл не создался, выводится сообщение и задание прерывается. Иначе выводится содержимое task4.txt, вызывается SolveVoicedConsonants и печатаются найденные буквы
 
 ### Тестирование
-
+<img width="514" height="440" alt="image" src="https://github.com/user-attachments/assets/e05f983d-ca71-4054-b8fb-6abb7b9c8cb8" />
+<img width="561" height="496" alt="image" src="https://github.com/user-attachments/assets/650a7232-5c86-4927-b015-838bf718f2c1" />
+<img width="767" height="479" alt="image" src="https://github.com/user-attachments/assets/48a4f9d3-767f-44ab-8bfb-22c70980c04f" />
 
 
 
@@ -97,10 +114,16 @@ Dictionary/SortedList.
 Иванова2
 
 ### Алгоритм решения
-1.
+1. В классе Collections созданы методы заполнения файла task5.txt: FillStudentsFileManual для ручного ввода фамилий и имен, FillStudentsFileAuto для случайного заполнения из двух готовых массивов. Запись идет через StreamWriter внутри using, оба метода возвращают bool и обрабатывают ошибки через try-catch
+2. Метод ValidateStudentName проверяет формат строки: через Split(' ') делит ее на фамилию и имя, проверяет, что получилось ровно две непустые части, фамилия не длиннее 20 символов, имя не длиннее 15. Если формат неправильный, при ручном заполнении ввод повторяется. Метод ReadStudentsFile читает файл построчно через StreamReader в List<string>
+3. Метод GenerateLogins создает Dictionary<string, int> surnameCount, где ключ это фамилия, а значение количество ее появлений. Для каждой строки вызывается ValidateStudentName, затем через TryGetValue проверяется наличие фамилии в словаре. Если ее нет, записывается 1 и логином становится фамилия. Если уже была, счетчик увеличивается и к фамилии приписывается число (2, 3 и т.д.). Логины сохраняются в List<string>, PrintLogins выводит учеников и их логины.
+4. В SolveTask5 пользователь выбирает способ заполнения и количество учеников от 1 до 100 (ReadInt(1, 100)). Если файл не создался, задание прерывается. Иначе данные читаются из task5.txt, выводится список учеников, вызывается GenerateLogins и печатаются логины. Благодаря Dictionary поиск фамилии выполняется в среднем за 1, поэтому формирование всех логинов имеет сложность N
 
 ### Тестирование
-
+<img width="727" height="859" alt="image" src="https://github.com/user-attachments/assets/6fa44f69-7ecf-45b8-ae64-de1042f0d96d" />
+<img width="688" height="878" alt="image" src="https://github.com/user-attachments/assets/bcf13510-dbc4-47ae-8da9-c41150310c3c" />
+<img width="541" height="872" alt="image" src="https://github.com/user-attachments/assets/7e6475dd-9be5-4bb8-8f16-dd3e661839da" />
+<img width="565" height="877" alt="image" src="https://github.com/user-attachments/assets/08b95377-d8c9-453e-8f73-ed228bf63571" />
 
 
 
@@ -115,9 +138,13 @@ Dictionary/SortedList.
 <img width="824" height="91" alt="image" src="https://github.com/user-attachments/assets/f93bbc74-acd8-4fdc-b016-099be3bfdfcf" />
 
 ### Алгоритм решения
-1.
+1. Создан класс Time с двумя закрытыми полями byte: _hours и _minutes. Конструкторы: по умолчанию (00:00), с параметрами (byte hours, byte minutes) с проверкой часов от 0 до 23 и минут от 0 до 59, копирования, который берет значения из другого Time (если null, устанавливается 00:00). Созданы свойства Hours и Minutes с get и set, при неправильном значении в set выбрасывается ArgumentOutOfRangeException
+2. Метод GetTotalMinutes переводит время в минуты (_hours * 60 + _minutes). Метод FromTotalMinutes делает обратное преобразование: берет остаток от деления на 1440, если результат отрицательный, прибавляет 1440, затем вычисляет часы и минуты. Т.е. время учитывает переход через полночь. Метод AddMinutes(uint minutes) прибавляет минуты, для суммы используется long, возвращается новый объект Time. Перегруженный ToString выводит время в формате ЧЧ:ММ через D2
+3. В SolveTask6 сначала создается Time конструктором по умолчанию, затем пользователь вводит часы и минуты с проверкой через ReadInt(0, 23) и ReadInt(0, 59), создается объект с параметрами и его копия. Далее выводятся Hours и Minutes, пользователь задает новые значения через свойства, копия выводится отдельно для проверки. Затем вводится количество минут через ReadUInt, вызывается AddMinutes и выводится результат
 
 ### Тестирование
+<img width="498" height="731" alt="image" src="https://github.com/user-attachments/assets/d232f1c9-1798-431e-8767-98ac00cb59d6" />
+<img width="1150" height="673" alt="image" src="https://github.com/user-attachments/assets/73b4bfd5-25f6-47de-a21f-da2da7059ebb" />
 
 
 
@@ -133,9 +160,16 @@ Dictionary/SortedList.
 <img width="815" height="285" alt="image" src="https://github.com/user-attachments/assets/f585d516-5045-4f39-8fa7-2ced2ebbe8f7" />
 
 ### Алгоритм решения
-1. 
+1. В классе Time перегружены операторы ++ и --. Оба используют GetTotalMinutes и FromTotalMinutes: ++ прибавляет минуту, -- вычитает минуту. Остаток от деления на 1440 позволяет переходить через полночь, т.е. 23:59 превращается в 00:00, а 00:00 в 23:59.
+2. Перегружены преобразования в byte и bool. Явное преобразование (byte) возвращает только часы из _hours. Неявное преобразование bool возвращает false для 00:00 и true для любого другого времени.
+3. Перегружены бинарные операторы Time + uint, uint + Time, Time - uint и uint - Time. Количество минут переводится в long, чтобы избежать переполнения при больших uint, затем результат преобразуется в Time через FromTotalMinutes. Для uint + Time используется уже написанный оператор Time + uint. Результат всегда остается в пределах суток.
+4. В SolveTask7 пользователь вводит часы и минуты с проверкой диапазонов, создается Time. Затем последовательно проверяются time++ и time--, отдельно переход через полночь для 23:59 и 00:00. Далее вводится количество минут через ReadUInt, вычисляются сложение и вычитание в обоих порядках, для uint - Time предусмотрен try-catch. В конце выводятся преобразования в byte и bool.
 
 ### Тестирование
+<img width="501" height="631" alt="image" src="https://github.com/user-attachments/assets/29f21533-f0ce-4778-9038-65bb4a8e0070" />
+<img width="424" height="677" alt="image" src="https://github.com/user-attachments/assets/60bf0eef-7e47-4714-b3ab-e8def226ca59" />
+<img width="407" height="584" alt="image" src="https://github.com/user-attachments/assets/473e6fdf-0b80-4a40-9400-0354ec548136" />
+
 
 
 
